@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Notes App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Notes App</h1>
+    <h2>Saving Notes You'll Never Forget</h2>
+    <input type="text" id="search-text" placeholder="Filter Notes">
+    <select name="" id="sort-by">
+        <option value="edited">Last Edited</option>
+        <option value="chron">Recently Created</option>
+        <option value="alpa">Alphabetical</option>
+    </select>
+    <div id="note-container"></div>
+    <button id="new-note">Submit</button>
+    <script src="http://wzrd.in/standalone/uuid%2Fv4@latest"></script>
+    <script>
+        uuidv4(); // -> v4 UUID
+    </script>
+    <script src='notes-functions.js'></script>
+    <script src='notes-app.js'></script>
+</body>
+</html>
