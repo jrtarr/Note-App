@@ -1,5 +1,6 @@
 body{
-    background-color: white;
+    background-color: rgb(50,50,50);
+    color: white;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -8,6 +9,7 @@ body{
 }
 
 .remove-button{
+    cursor: pointer;
     border: none;
     background: none;
     font-weight: bold;
@@ -17,4 +19,17 @@ body{
 }
 .remove-button:hover{
     color: rgb(255,100,100)
+}
+
+#note-body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a,a:visited{
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+a:hover{
+    color: rgb(100,175,250);
 }

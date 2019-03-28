@@ -1,4 +1,4 @@
-const notes = getSavedNotes()
+let notes = getSavedNotes()
 
 const filters = {
     searchText: ''
@@ -22,8 +22,17 @@ document.querySelector('#new-note').addEventListener('click',function(e){
     notes.push({
         id: id,
         title: '',
-        body: ''
+        body: '',
+        dateCreated: new Date(),
+        lastEdited: new Date()
     })
     saveNotes(notes)
     location.assign(`edit.html#${id}`)
+})
+
+window.addEventListener('storage',function(e){
+    if(e.key === 'notes'){
+        notes = getSavedNotes()
+        renderNotes(notes,filters)
+    }
 })
