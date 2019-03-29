@@ -15,9 +15,11 @@ function saveNotes(notes){
 
 //Generate DOM structure for new note
 const generateNoteDOM = function(note){
+
     //Setup Parent note container
     const newNote = document.createElement('div')
     newNote.classList.add('note')
+
     //Setup remove button
     const removeButton = document.createElement('button')
     removeButton.classList.add('remove-button')
@@ -36,9 +38,16 @@ const generateNoteDOM = function(note){
         noteText.textContent = 'Unnamed Note'
     }
     noteText.href = `/edit.html#${note.id}`
+
+    //Setup timestamp text
+    const lastEdited = document.createElement('span')
+    lastEdited.classList.add('last-edited')
+    lastEdited.textContent = getEditedAt(note.editedAt)
+
     //Add button and text to parent container
     newNote.appendChild(removeButton)
     newNote.appendChild(noteText)
+    newNote.appendChild(lastEdited)
 
     return newNote
 }
@@ -48,12 +57,14 @@ const renderNotes = function(notes,filters){
     const filteredNotes = notes.filter(function(note){
         return note.title.toLowerCase().includes(filters.searchText.toLowerCase())
     })
+    sortNotes(filteredNotes,filters.sortBy)
     document.querySelector('#note-container').innerHTML=''
     filteredNotes.forEach(function(note){
         document.querySelector('#note-container').appendChild(generateNoteDOM(note))
     })
 }
 
+// Remove Note
 function removeNote(id){
     const i = notes.findIndex(function(note){
         return note.id === id
@@ -62,4 +73,40 @@ function removeNote(id){
         notes.splice(i,1)
     }
 }
+function getEditedAt(timestamp){
+    return `Last edited: ${moment(timestamp).fromNow()}`
+}
 
+function sortNotes(notes,sortBy){
+    if (sortBy === 'edited'){
+        notes.sort(function(a,b){
+            if(a.editedAt > b.editedAt){ //a came after b
+                return -1
+            }else if(b.editedAt > a.editedAt){ //b came after a
+                return 1
+            }else{
+                return 0
+            }
+        })
+    }else if(sortBy === 'chron'){
+        notes.sort(function(a,b){
+            if(a.createdAt > b.createdAt){ //a came after b
+                return 1
+            }else if(b.createdAt > a.createdAt){ //b came after a
+                return -1
+            }else{
+                return 0
+            }
+        })
+    }else if(sortBy === 'alpha'){
+        notes.sort(function(a,b){
+            if(a.title > b.title){ //a came after b
+                return 1
+            }else if(b.title > a.title){ //b came after a
+                return -1
+            }else{
+                return 0
+            }
+        })
+    }
+}

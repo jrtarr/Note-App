@@ -1,7 +1,9 @@
 let notes = getSavedNotes()
 
+//edited, chron, alph
 const filters = {
-    searchText: ''
+    searchText: '',
+    sortBy: 'edited'
 }
 
 renderNotes(notes, filters);
@@ -13,7 +15,8 @@ document.querySelector("#search-text").addEventListener('input',function(e){
 }) 
 
 document.querySelector('#sort-by').addEventListener('change',function(e){
-    console.log(e.target.value)
+    filters.sortBy = e.target.value
+    renderNotes(notes,filters)
 })
 
 document.querySelector('#new-note').addEventListener('click',function(e){
@@ -23,8 +26,8 @@ document.querySelector('#new-note').addEventListener('click',function(e){
         id: id,
         title: '',
         body: '',
-        dateCreated: new Date(),
-        lastEdited: new Date()
+        createdAt: moment().valueOf(),
+        editedAt: moment().valueOf()
     })
     saveNotes(notes)
     location.assign(`edit.html#${id}`)
