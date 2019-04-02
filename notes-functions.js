@@ -1,9 +1,9 @@
 // Read existing notes from localStorage
 const getSavedNotes = () => {
     const notesJSON = localStorage.getItem('notes')
-    if(notesJSON !== null){
-        return JSON.parse(notesJSON)
-    } else{
+    try{
+        return notesJSON ? JSON.parse(notesJSON) : []
+    } catch (e){
         return []
     }
 }
@@ -32,11 +32,7 @@ const generateNoteDOM = (note) => {
 
     //Setup Note Text
     const noteText = document.createElement('a')
-    if(note.title.length > 0){
-        noteText.textContent = note.title 
-    }else{
-        noteText.textContent = 'Unnamed Note'
-    }
+    note.title.length ? noteText.textContent = note.title : noteText.textContent = 'Unnamed Note'
     noteText.href = `/edit.html#${note.id}`
 
     //Setup timestamp text
