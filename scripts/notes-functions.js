@@ -17,31 +17,22 @@ const saveNotes = (notes) => {
 const generateNoteDOM = (note) => {
 
     //Setup Parent note container
-    const newNote = document.createElement('div')
-    newNote.classList.add('note')
-
-    //Setup remove button
-    const removeButton = document.createElement('button')
-    removeButton.classList.add('remove-button')
-    removeButton.textContent = 'x'
-    removeButton.addEventListener('click',() => {
-        removeNote(note.id)
-        saveNotes(notes)
-        renderNotes(notes,filters)
-    })
+    const newNote = document.createElement('a')
+    newNote.classList.add('list-item')
+    newNote.href = `/edit.html#${note.id}`
 
     //Setup Note Text
-    const noteText = document.createElement('a')
+    const noteText = document.createElement('p')
     note.title.length ? noteText.textContent = note.title : noteText.textContent = 'Unnamed Note'
-    noteText.href = `/edit.html#${note.id}`
+    noteText.classList.add = 'list-item__title'
 
     //Setup timestamp text
-    const lastEdited = document.createElement('span')
+    const lastEdited = document.createElement('p')
     lastEdited.classList.add('last-edited')
+    lastEdited.classList.add('list-item__subtitle')
     lastEdited.textContent = getEditedAt(note.editedAt)
 
     //Add button and text to parent container
-    newNote.appendChild(removeButton)
     newNote.appendChild(noteText)
     newNote.appendChild(lastEdited)
 
@@ -53,9 +44,16 @@ const renderNotes = function(notes,filters){
     const filteredNotes = notes.filter((note) => note.title.toLowerCase().includes(filters.searchText.toLowerCase()))
     sortNotes(filteredNotes,filters.sortBy)
     document.querySelector('#note-container').innerHTML=''
-    filteredNotes.forEach((note) => {
-        document.querySelector('#note-container').appendChild(generateNoteDOM(note))
-    })
+    if (filteredNotes.length>0){
+        filteredNotes.forEach((note) => {
+            document.querySelector('#note-container').appendChild(generateNoteDOM(note))
+        })
+    }else{
+        const emptyMessage = document.createElement('p')
+        emptyMessage.textContent = 'You haven\'t created any notes!'
+        emptyMessage.classList.add('empty-message')
+        document.querySelector('#note-container').appendChild(emptyMessage)
+    }
 }
 
 // Remove Note
