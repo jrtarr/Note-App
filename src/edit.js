@@ -19,7 +19,6 @@ intializeEdit(noteID)
 //Update Title
 noteTitle.addEventListener('input',(e) => {
     update.title = e.target.value
-    console.log()
     updateNote(noteID,update)
     lastEdited.textContent = getEditedAt(moment().valueOf())
     saveNotes()
@@ -32,7 +31,7 @@ noteBody.addEventListener('input',(e) => {
     saveNotes()
 })
 //Removing Note
-removeButton.addEventListener('click',(e) => {
+removeButton.addEventListener('click',() => {
     removeNote(noteID)
     saveNotes()
     location.assign('/index.html')
